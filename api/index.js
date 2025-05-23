@@ -1,11 +1,14 @@
 const express = require('express')
 const cors = require('cors')
+const { PrismaClient } = require('@prisma/client')
 require('dotenv').config()
 
 const app = express()
+const prisma = new PrismaClient()
 
 app.use(cors())
 app.use(express.json())
+
 
 // Importer les routes
 const imprimerieRoute = require('../routes/controllerResultImprimerie')
@@ -20,7 +23,7 @@ app.use('/cercleDuSavoir', cercleDesSavoirsRoute)
 
 
 app.get('/', (req, res) => {
-  res.send('API host sur Vercel opérationnelle 🚀')
+  res.send('API host sur Vercel API opérationnelle 🚀')
 })
 
 const PORT = process.env.PORT || 3000
