@@ -8,3 +8,23 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model ResultatImprimerie {
+  id Int @id @default(autoincrement())
+  score Int 
+  pseudo String
+}
+
+model ResultatRouteDeLaSoie {
+  id Int @id @default(autoincrement())
+  score Int 
+  pseudo String
+}
+
+model ResultatCercleDesSavoirs {
+  id Int @id @default(autoincrement())
+  score Int 
+  pseudo String
+}
+
+
+
