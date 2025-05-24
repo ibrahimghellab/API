@@ -4,26 +4,40 @@ const { PrismaClient } = require('@prisma/client');
 const router = express.Router();
 const prisma = new PrismaClient();
 
-// GET tous les résultats
+// GET : récupérer tous les scores Route de la Soie
 router.get('/', async (req, res) => {
-    res.json(await prisma.resultatRouteDeLaSoie.findMany());
+  try {
+    const resultats = await prisma.resultatRouteDeLaSoie.findMany({
+      orderBy: {
+        score: 'desc',
+      },
+      take: 100, // limite les résultats
+    });
+    res.status(200).json(resultats);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des scores.' });
+  }
 });
 
+// POST : enregistrer un nouveau score
+router.post('/', async (req, res) => {
+  const { pseudo, score } = req.body;
 
-// POST ajouter un résultat
-router.post('/', (req, res) => {
-    const { pseudo, score } = req.body;
-    prisma.resultatRouteDeLaSoie.create({
-        data: {
-            pseudo, 
-            score 
-        }
-    })
-    .then(nouveauResultat => res.status(201).json(nouveauResultat))
-    .catch(error => res.status(500).json({ error: error.message }));
-    
+  if (!pseudo || score == null) {
+    return res.status(400).json({ error: 'Pseudo et score sont requis.' });
+  }
+
+  try {
+    const nouveauScore = await prisma.resultatRouteDeLaSoie.create({
+      data: {
+        pseudo,
+        score: Number(score),
+      },
+    });
+    res.status(201).json(nouveauScore);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la création du score.' });
+  }
 });
-
-
 
 module.exports = router;
