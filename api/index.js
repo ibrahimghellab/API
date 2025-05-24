@@ -12,7 +12,7 @@ app.use(express.json());
 // Importer les routes
 const imprimerieRoute = require('../routes/controllerResultImprimerie');
 const routeDeLaSoieRoute = require('../routes/controllerResultRouteDeLaSoie');
-const cercleDesSavoirsRoute = require('../routes/controllerResultCercleDesSavoirs'); // <-- doit être un autre fichier
+const cercleDesSavoirsRoute = require('../routes/controllerResultatCercleDesSavoirs'); 
 
 app.use('/imprimerie', imprimerieRoute);
 app.use('/routeDeLaSoie', routeDeLaSoieRoute);
